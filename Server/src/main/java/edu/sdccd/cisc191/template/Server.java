@@ -23,6 +23,8 @@ public class Server extends Application {
     private TextArea notesArea = new TextArea();
     private HomeworkButton homeworkButton = new HomeworkButton();
     private SubjectButton subjectButton = new SubjectButton();
+
+    private static SubjectButton subjectSubmit = new SubjectButton();
     private AppLabel newHomework = new AppLabel();
     private TextField inputHomeworkName = new TextField();
     private CheckBox urgentCheck = new CheckBox();
@@ -33,6 +35,7 @@ public class Server extends Application {
     private Subject userSubject = new Subject();
     private TextField inputSubjectName = new TextField();
     private TextField inputSubjectNumber = new TextField();
+
     private TimerButton timerButton = new TimerButton();
     private AppLabel timerLabel = new AppLabel();
     private Time time = new Time();
@@ -154,19 +157,12 @@ public class Server extends Application {
         subjectPopup.getContent().addAll(subjectAdding);
 
         //creates a new subject and saves it to the ComboBox
-        subjectButton.setOnAction(e -> {
-            if (!subjectPopup.isShowing()) {
-                subjectPopup.show(stage);
-                subjectButton.setText("Create");
-            }
-            else {
-                userSubject.setSubjectName(inputSubjectName.getText());
-                userSubject.setSubjectNumber(inputSubjectNumber.getText());
-                subjectBox.getItems().add(userSubject.getSubject());
-                subjectPopup.hide();
-                subjectPopup.reset(subjectButton, inputSubjectName, inputSubjectNumber);
-            }
-        });
+
+        // NOTE from Everett (reviewer): I moved the code to the bottom of this file in a method
+        // "submitSubject" to avoid repeating the code.
+
+        submitSubject(stage, subjectPopup, subjectButton);
+        submitSubject(stage, subjectPopup, subjectSubmit); // The second "submit" button
 
         //timer popup
         TimerPopup timerPopup = new TimerPopup();
@@ -242,5 +238,22 @@ public class Server extends Application {
         stage.setScene(scene);
         stage.setTitle("Homework App");
         stage.show();
+    }
+
+    public void submitSubject(Stage stage, SubjectPopup subjectPopup, SubjectButton subjectButton) {
+        subjectButton.setOnAction(e -> {
+            if (!subjectPopup.isShowing()) {
+                subjectPopup.show(stage);
+                subjectButton.setText("Create");
+                subjectSubmit.setText("Submit");
+            }
+            else {
+                userSubject.setSubjectName(inputSubjectName.getText());
+                userSubject.setSubjectNumber(inputSubjectNumber.getText());
+                subjectBox.getItems().add(userSubject.getSubject());
+                subjectPopup.hide();
+                subjectPopup.reset(subjectButton, inputSubjectName, inputSubjectNumber);
+            }
+        });
     }
 }
