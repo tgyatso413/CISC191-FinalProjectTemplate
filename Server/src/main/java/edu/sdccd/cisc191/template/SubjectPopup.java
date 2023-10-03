@@ -1,6 +1,7 @@
 package edu.sdccd.cisc191.template;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -15,6 +16,10 @@ public class SubjectPopup extends Popup {
     private AppLabel nameAdd = new AppLabel();
     private AppLabel numberAdd = new AppLabel();
 
+    private AppButton subjectSubmit = new AppButton();
+
+
+
     /**
      * Sets contents of subject popup
      * @param inputSubjectName textfield for user subject name
@@ -24,9 +29,14 @@ public class SubjectPopup extends Popup {
 
         nameAdd.setText("Name: ");
         numberAdd.setText("Number: ");
+        subjectSubmit.setText("Submit"); // Reviewer (Everett) added an additional box for Submit. Idk how to center it or link it to your fancy API though.
+        // I found it somewhat difficult to get the hang of your application at first. I feel like there should be a "Submit" button for each popup,
+        // rather than having to re-select the button the nav bar on the bottom.
+        // Just a cosmetic suggestion, if anything.
         HBox subjectNameBox = new HBox(5, nameAdd, inputSubjectName);
         HBox subjectNumberBox = new HBox(5, numberAdd, inputSubjectNumber);
-        VBox subjectAdding = new VBox(5, subjectNameBox, subjectNumberBox);
+        HBox enterBox = new HBox(5,subjectSubmit);
+        VBox subjectAdding = new VBox(5, subjectNameBox, subjectNumberBox, enterBox);
         subjectAdding.setStyle("-fx-background-color: #E3F5F2; -fx-border-color: #E6C8EC;-fx-border-width:5");
         subjectAdding.setPadding(new Insets(10));
         return subjectAdding;
